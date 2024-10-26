@@ -13,4 +13,9 @@ def lambda_handler(event, context):
             "message": "API通信完了",
             # "location": ip.text.replace("\n", "")
         }),
+        "headers": {
+            "Access-Control-Allow-Origin": "*",
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+        },
     }

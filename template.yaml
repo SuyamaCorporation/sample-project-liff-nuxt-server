@@ -26,14 +26,25 @@ Resources:
           Properties:
             Path: /sample-project-liff-api
             Method: get
+            RestApiId:
+              Ref: SampleLiffApplicationApi
+
+  SampleLiffApplicationApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: Prod
+      Cors:
+        AllowMethods: "'GET,POST,PUT,DELETE,OPTIONS'"
+        AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'"
+        AllowOrigin: "'*'"
 
 Outputs:
-  # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
+  # SampleLiffApplicationApi is an implicit API created out of Events key under Serverless::Function
   # Find out more about other implicit resources you can reference within SAM
   # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
   SampleLiffAppApi:
     Description: "API Gateway endpoint URL for Prod stage for SampleLiffApp function"
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/sample-project-liff-api/"
+    Value: !Sub "https://${SampleLiffApplicationApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/sample-project-liff-api/"
   SampleLiffAppFunction:
     Description: "SampleLiffApp Lambda Function ARN"
     Value: !GetAtt SampleLiffAppFunction.Arn

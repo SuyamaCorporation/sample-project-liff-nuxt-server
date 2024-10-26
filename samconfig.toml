@@ -4,6 +4,6 @@ stack_name = "sample-project-liff-server"
 resolve_s3 = true
 s3_prefix = "sample-project-liff-server"
 region = "ap-northeast-1"
-confirm_changeset = true
+confirm_changeset = false
 capabilities = "CAPABILITY_IAM"
 image_repositories = []
