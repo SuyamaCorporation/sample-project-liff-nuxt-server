@@ -1,11 +1,27 @@
 import json
+import requests
 
-# import requests
-
+url = "https://api.line.me/oauth2/v2.1/verify"
 
 def lambda_handler(event, context):
 
     print(json.dumps(event))
+
+    idToken = event["queryStringParameters"]["idToken"] 
+    print(idToken)
+
+    headers = {
+        "Content-Type": "application/x-www-form-urlencoded",
+    }
+
+    payload = {
+        "id_token": idToken,
+        "client_id": "あなたのチャネルID",
+    }
+
+    res = requests.post(url, headers=headers, data=payload)
+
+    print(json.dumps(res.json()))
 
     return {
         "statusCode": 200,
