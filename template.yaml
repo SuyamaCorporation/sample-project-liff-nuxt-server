@@ -1,0 +1,42 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  sample-project-liff-nuxt-server
+
+  Sample SAM Template for sample-project-liff-nuxt-server
+
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    Timeout: 3
+    MemorySize: 128
+
+Resources:
+  SampleLiffAppFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: src/
+      Handler: app.lambda_handler
+      Runtime: python3.12
+      Architectures:
+        - x86_64
+      Events:
+        SampleLiffAppApi:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /sample-project-liff-api
+            Method: get
+
+Outputs:
+  # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
+  # Find out more about other implicit resources you can reference within SAM
+  # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
+  SampleLiffAppApi:
+    Description: "API Gateway endpoint URL for Prod stage for SampleLiffApp function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/sample-project-liff-api/"
+  SampleLiffAppFunction:
+    Description: "SampleLiffApp Lambda Function ARN"
+    Value: !GetAtt SampleLiffAppFunction.Arn
+  SampleLiffAppFunctionIamRole:
+    Description: "Implicit IAM Role created for SampleLiffApp function"
+    Value: !GetAtt SampleLiffAppFunctionRole.Arn
